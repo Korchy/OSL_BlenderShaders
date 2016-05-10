@@ -1,0 +1,81 @@
+shader Octagon (
+    vector Vector = P,
+    color Color1 = color(1.0,0.0,0.0),
+    color Color2 = color(0.0,0.0,1.0),
+    color Color3 = color(0.0,1.0,0.0),
+    color BorderColor = color(0.0,0.0,0.0),
+    output float Factor = 1.0,
+    output color Color = color(0.0,0.0,0.0)
+    )
+{
+    vector Pl = Vector;
+    Pl = transform("object",Vector);    // Перекинуть в координаты объекта (на всем протяжении объекта значение меняется от 0 до 1)
+    
+    // Заполнить массив координатами выпуклого многоугольника в порядке против часовой стрелки
+    // Например для 8-угольника считаем длину стороны a = (sin(180/кол-во сторон)) *  (L / PI) где L = длина описаной окружности L = PI *D где D = 1 диаметр
+    // a = sin(180/8) = 0,38 - отступ от нуля = (1 - 0.38)/2 = 0.31
+    point ngon[8] = {point(0.31,0.0,0.0), point(0.69,0.0,0.0), point(1.0,0.31,0.0), point(1.0,0.69,0.0), point(0.69,1.0,0.0), point(0.31,1.0,0.0), point(0.0,0.69,0.0), point(0.0,0.31,0.0)};
+    
+    // Создать такой же массив для выпуклого многоугольника чуть меньшего размера, чтобы обозначить рамку
+    point ngon1[8];
+    float Scale = 0.05;
+    for(int p=0; p<arraylength(ngon); p++) {
+        if(fmod(abs(Pl[0]),1)<0.5&&fmod(abs(Pl[1]),1)<0.5) ngon1[p] = point(ngon[p][0]+Scale,ngon[p][1]+Scale,0.0);
+        if(fmod(abs(Pl[0]),1)>=0.5&&fmod(abs(Pl[1]),1)<0.5) ngon1[p] = point(ngon[p][0]-Scale,ngon[p][1]+Scale,0.0);
+        if(fmod(abs(Pl[0]),1)<0.5&&fmod(abs(Pl[1]),1)>=0.5) ngon1[p] = point(ngon[p][0]+Scale,ngon[p][1]-Scale,0.0);
+        if(fmod(abs(Pl[0]),1)>=0.5&&fmod(abs(Pl[1]),1)>=0.5) ngon1[p] = point(ngon[p][0]-Scale,ngon[p][1]-Scale,0.0);
+    }    
+    
+    // "Освещенность" каждого многоугольника - формальный параметр к реальной освещенности отношения не имеет. Формально определяет будет ли освещено ребро многоугольника если поместить в текущую точку 
+    // источник света
+    int Lighten = 0;
+    int Lighten1 = 0;
+    
+    // "Освещенность" считаем исходя из площади треугольника ABT, образованного текущей точкой (T) и двумя последовательными точками многоугольника (А и B)
+    // площадь треугольника считаем как половина площади паралелограма натянутого на веторы TA и TB. Т.к. ребра многоугольника ориентированы (против часовой стрелки) площадь будет >0, <0 или =0 (если точка 
+    // T лежит на ребре многоугольника
+    // Если площадь >=0 - считаем ребро "освещено"
+    for(int p=0; p<arraylength(ngon); p++) {
+        int pn = p+1;
+        if(pn==arraylength(ngon)) pn=0;
+        float Tx = fmod(abs(Pl[0]),1);  // берем только дробную часть (по модулю) чтобы считать везде а не только в (0-1)
+        float Ty = fmod(abs(Pl[1]),1);
+        
+        // Большой многоугольник
+        float Ax = ngon[p][0];
+        float Ay = ngon[p][1];
+        float Bx = ngon[pn][0];
+        float By = ngon[pn][1];
+        float S = ((Ax-Tx)*(By-Ty)-(Ay-Ty)*(Bx-Tx))*0.5;
+        if(S>=0) Lighten = Lighten+1;
+        
+        // Меньший многоугольник (для рамки)
+        Ax = ngon1[p][0];
+        Ay = ngon1[p][1];
+        Bx = ngon1[pn][0];
+        By = ngon1[pn][1];
+        S = ((Ax-Tx)*(By-Ty)-(Ay-Ty)*(Bx-Tx))*0.5;
+        if(S>=0) Lighten1 = Lighten1+1;
+
+    }
+    
+    // Из общей "освещенности" многоугольников получаем цвет
+    if(Lighten==arraylength(ngon)&&Lighten1==arraylength(ngon)) {
+        // "освещены" большой и маленький многоугольники - основной цвет
+        Factor = 1;
+        if(fmod(ceil(Pl[0]),2)==0&&fmod(ceil(Pl[1]),2)!=0||fmod(ceil(Pl[0]),2)!=0&&fmod(ceil(Pl[1]),2)==0) Color = Color1;
+        else Color = Color2;
+    }
+    else {
+        if(Lighten==arraylength(ngon)) {
+            // Освещен только маленький - цвет рамки
+            Factor = 0.5;
+            Color = BorderColor;
+        }
+        else {
+            // Промежутки
+            Factor = 0;
+            Color = Color3;
+        }
+    }
+}
