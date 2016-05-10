@@ -1,0 +1,478 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.3.2
+shader ShaderName
+param	vector	Vector	0 0 0 		 %read{1,3} %write{0,0}
+param	color	Color1	1 0 0 		 %read{199,199} %write{2147483647,-1}
+param	color	Color2	0 0 1 		 %read{200,200} %write{2147483647,-1}
+param	color	Color3	0 1 0 		 %read{207,207} %write{2147483647,-1}
+param	color	BorderColor	0 0 0 		 %read{205,205} %write{2147483647,-1}
+oparam	float	Factor	1 		 %read{2147483647,-1} %write{169,206}
+oparam	color	Color	0 0 0 		 %read{2147483647,-1} %write{199,207}
+global	point	P	 %read{0,0} %write{2147483647,-1}
+local	vector	Pl	 %read{17,190} %write{1,3}
+local	point[8]	ngon	 %read{15,201} %write{4,11}
+local	point[8]	ngon1	 %read{13,145} %write{13,102}
+local	float	Scale	 %read{32,98} %write{12,12}
+local	int	___297_p	 %read{13,102} %write{13,102}
+local	int	Lighten	 %read{105,202} %write{103,159}
+local	int	Lighten1	 %read{105,165} %write{104,159}
+local	int	___299_p	 %read{105,159} %write{105,159}
+local	int	___300_pn	 %read{105,159} %write{105,159}
+local	float	___300_Tx	 %read{105,159} %write{105,159}
+local	float	___300_Ty	 %read{105,159} %write{105,159}
+local	float	___300_Ax	 %read{105,159} %write{105,159}
+local	float	___300_Ay	 %read{105,159} %write{105,159}
+local	float	___300_Bx	 %read{105,159} %write{105,159}
+local	float	___300_By	 %read{105,159} %write{105,159}
+local	float	___300_S	 %read{105,159} %write{105,159}
+const	string	$const1	"object"		 %read{3,3} %write{2147483647,-1}
+const	string	$const2	"transform"		 %read{2,2} %write{2147483647,-1}
+const	string	$const3	"common"		 %read{3,3} %write{2147483647,-1}
+const	point	$const4	0.31 0 0		 %read{4,4} %write{2147483647,-1}
+const	int	$const5	0		 %read{4,206} %write{2147483647,-1}
+const	point	$const6	0.69 0 0		 %read{5,5} %write{2147483647,-1}
+const	int	$const7	1		 %read{5,190} %write{2147483647,-1}
+const	point	$const8	1 0.31 0		 %read{6,6} %write{2147483647,-1}
+const	int	$const9	2		 %read{6,6} %write{2147483647,-1}
+const	point	$const10	1 0.69 0		 %read{7,7} %write{2147483647,-1}
+const	int	$const11	3		 %read{7,7} %write{2147483647,-1}
+const	point	$const12	0.69 1 0		 %read{8,8} %write{2147483647,-1}
+const	int	$const13	4		 %read{8,8} %write{2147483647,-1}
+const	point	$const14	0.31 1 0		 %read{9,9} %write{2147483647,-1}
+const	int	$const15	5		 %read{9,9} %write{2147483647,-1}
+const	point	$const16	0 0.69 0		 %read{10,10} %write{2147483647,-1}
+const	int	$const17	6		 %read{10,10} %write{2147483647,-1}
+const	point	$const18	0 0.31 0		 %read{11,11} %write{2147483647,-1}
+const	int	$const19	7		 %read{11,11} %write{2147483647,-1}
+const	float	$const20	0.050000001		 %read{12,12} %write{2147483647,-1}
+temp	int	$tmp9	 %read{16,16} %write{15,15}
+temp	int	$tmp10	 %read{13,102} %write{13,102}
+temp	float	$tmp11	 %read{20,20} %write{19,19}
+temp	float	$tmp12	 %read{19,19} %write{18,18}
+temp	float	$tmp13	 %read{18,18} %write{17,17}
+const	float	$const21	1		 %read{19,119} %write{2147483647,-1}
+const	float	$const22	0.5		 %read{20,204} %write{2147483647,-1}
+temp	int	$tmp14	 %read{21,21} %write{20,20}
+temp	int	$tmp15	 %read{22,29} %write{21,28}
+temp	float	$tmp16	 %read{26,26} %write{25,25}
+temp	float	$tmp17	 %read{25,25} %write{24,24}
+temp	float	$tmp18	 %read{24,24} %write{23,23}
+temp	int	$tmp19	 %read{27,27} %write{26,26}
+temp	int	$tmp20	 %read{28,28} %write{27,27}
+temp	point	$tmp21	 %read{37,37} %write{36,36}
+temp	float	$tmp22	 %read{32,32} %write{31,31}
+temp	point	$tmp23	 %read{31,31} %write{30,30}
+temp	float	$tmp24	 %read{36,36} %write{32,32}
+temp	float	$tmp25	 %read{35,35} %write{34,34}
+temp	point	$tmp26	 %read{34,34} %write{33,33}
+temp	float	$tmp27	 %read{36,36} %write{35,35}
+const	float	$const23	0		 %read{36,99} %write{2147483647,-1}
+temp	float	$tmp28	 %read{41,41} %write{40,40}
+temp	float	$tmp29	 %read{40,40} %write{39,39}
+temp	float	$tmp30	 %read{39,39} %write{38,38}
+temp	int	$tmp31	 %read{42,42} %write{41,41}
+temp	int	$tmp32	 %read{43,50} %write{42,49}
+temp	float	$tmp33	 %read{47,47} %write{46,46}
+temp	float	$tmp34	 %read{46,46} %write{45,45}
+temp	float	$tmp35	 %read{45,45} %write{44,44}
+temp	int	$tmp36	 %read{48,48} %write{47,47}
+temp	int	$tmp37	 %read{49,49} %write{48,48}
+temp	point	$tmp38	 %read{58,58} %write{57,57}
+temp	float	$tmp39	 %read{53,53} %write{52,52}
+temp	point	$tmp40	 %read{52,52} %write{51,51}
+temp	float	$tmp41	 %read{57,57} %write{53,53}
+temp	float	$tmp42	 %read{56,56} %write{55,55}
+temp	point	$tmp43	 %read{55,55} %write{54,54}
+temp	float	$tmp44	 %read{57,57} %write{56,56}
+temp	float	$tmp45	 %read{62,62} %write{61,61}
+temp	float	$tmp46	 %read{61,61} %write{60,60}
+temp	float	$tmp47	 %read{60,60} %write{59,59}
+temp	int	$tmp48	 %read{63,63} %write{62,62}
+temp	int	$tmp49	 %read{64,71} %write{63,70}
+temp	float	$tmp50	 %read{68,68} %write{67,67}
+temp	float	$tmp51	 %read{67,67} %write{66,66}
+temp	float	$tmp52	 %read{66,66} %write{65,65}
+temp	int	$tmp53	 %read{69,69} %write{68,68}
+temp	int	$tmp54	 %read{70,70} %write{69,69}
+temp	point	$tmp55	 %read{79,79} %write{78,78}
+temp	float	$tmp56	 %read{74,74} %write{73,73}
+temp	point	$tmp57	 %read{73,73} %write{72,72}
+temp	float	$tmp58	 %read{78,78} %write{74,74}
+temp	float	$tmp59	 %read{77,77} %write{76,76}
+temp	point	$tmp60	 %read{76,76} %write{75,75}
+temp	float	$tmp61	 %read{78,78} %write{77,77}
+temp	float	$tmp62	 %read{83,83} %write{82,82}
+temp	float	$tmp63	 %read{82,82} %write{81,81}
+temp	float	$tmp64	 %read{81,81} %write{80,80}
+temp	int	$tmp65	 %read{84,84} %write{83,83}
+temp	int	$tmp66	 %read{85,92} %write{84,91}
+temp	float	$tmp67	 %read{89,89} %write{88,88}
+temp	float	$tmp68	 %read{88,88} %write{87,87}
+temp	float	$tmp69	 %read{87,87} %write{86,86}
+temp	int	$tmp70	 %read{90,90} %write{89,89}
+temp	int	$tmp71	 %read{91,91} %write{90,90}
+temp	point	$tmp72	 %read{100,100} %write{99,99}
+temp	float	$tmp73	 %read{95,95} %write{94,94}
+temp	point	$tmp74	 %read{94,94} %write{93,93}
+temp	float	$tmp75	 %read{99,99} %write{95,95}
+temp	float	$tmp76	 %read{98,98} %write{97,97}
+temp	point	$tmp77	 %read{97,97} %write{96,96}
+temp	float	$tmp78	 %read{99,99} %write{98,98}
+temp	int	$tmp79	 %read{2147483647,-1} %write{101,101}
+temp	int	$tmp80	 %read{108,108} %write{107,107}
+temp	int	$tmp81	 %read{105,159} %write{105,159}
+temp	int	$tmp82	 %read{111,111} %write{110,110}
+temp	int	$tmp83	 %read{112,112} %write{111,111}
+temp	float	$tmp84	 %read{116,116} %write{115,115}
+temp	float	$tmp85	 %read{115,115} %write{114,114}
+temp	float	$tmp86	 %read{119,119} %write{118,118}
+temp	float	$tmp87	 %read{118,118} %write{117,117}
+temp	point	$tmp88	 %read{121,121} %write{120,120}
+temp	point	$tmp89	 %read{123,123} %write{122,122}
+temp	point	$tmp90	 %read{125,125} %write{124,124}
+temp	point	$tmp91	 %read{127,127} %write{126,126}
+temp	float	$tmp92	 %read{130,130} %write{128,128}
+temp	float	$tmp93	 %read{130,130} %write{129,129}
+temp	float	$tmp94	 %read{134,134} %write{130,130}
+temp	float	$tmp95	 %read{133,133} %write{131,131}
+temp	float	$tmp96	 %read{133,133} %write{132,132}
+temp	float	$tmp97	 %read{134,134} %write{133,133}
+temp	float	$tmp98	 %read{135,135} %write{134,134}
+temp	int	$tmp99	 %read{137,137} %write{136,136}
+temp	point	$tmp100	 %read{140,140} %write{139,139}
+temp	point	$tmp101	 %read{142,142} %write{141,141}
+temp	point	$tmp102	 %read{144,144} %write{143,143}
+temp	point	$tmp103	 %read{146,146} %write{145,145}
+temp	float	$tmp104	 %read{149,149} %write{147,147}
+temp	float	$tmp105	 %read{149,149} %write{148,148}
+temp	float	$tmp106	 %read{153,153} %write{149,149}
+temp	float	$tmp107	 %read{152,152} %write{150,150}
+temp	float	$tmp108	 %read{152,152} %write{151,151}
+temp	float	$tmp109	 %read{153,153} %write{152,152}
+temp	float	$tmp110	 %read{154,154} %write{153,153}
+temp	int	$tmp111	 %read{156,156} %write{155,155}
+temp	int	$tmp112	 %read{2147483647,-1} %write{158,158}
+temp	int	$tmp113	 %read{161,161} %write{160,160}
+temp	int	$tmp114	 %read{162,162} %write{161,161}
+temp	int	$tmp115	 %read{163,168} %write{162,167}
+temp	int	$tmp116	 %read{165,165} %write{164,164}
+temp	int	$tmp117	 %read{166,166} %write{165,165}
+temp	int	$tmp118	 %read{167,167} %write{166,166}
+temp	float	$tmp119	 %read{173,173} %write{172,172}
+temp	float	$tmp120	 %read{172,172} %write{171,171}
+temp	float	$tmp121	 %read{171,171} %write{170,170}
+const	float	$const24	2		 %read{172,192} %write{2147483647,-1}
+temp	int	$tmp122	 %read{174,174} %write{173,173}
+temp	int	$tmp123	 %read{175,182} %write{174,181}
+temp	float	$tmp124	 %read{179,179} %write{178,178}
+temp	float	$tmp125	 %read{178,178} %write{177,177}
+temp	float	$tmp126	 %read{177,177} %write{176,176}
+temp	int	$tmp127	 %read{180,180} %write{179,179}
+temp	int	$tmp128	 %read{181,181} %write{180,180}
+temp	int	$tmp129	 %read{183,198} %write{182,197}
+temp	float	$tmp130	 %read{187,187} %write{186,186}
+temp	float	$tmp131	 %read{186,186} %write{185,185}
+temp	float	$tmp132	 %read{185,185} %write{184,184}
+temp	int	$tmp133	 %read{188,188} %write{187,187}
+temp	int	$tmp134	 %read{189,196} %write{188,195}
+temp	float	$tmp135	 %read{193,193} %write{192,192}
+temp	float	$tmp136	 %read{192,192} %write{191,191}
+temp	float	$tmp137	 %read{191,191} %write{190,190}
+temp	int	$tmp138	 %read{194,194} %write{193,193}
+temp	int	$tmp139	 %read{195,195} %write{194,194}
+temp	int	$tmp140	 %read{197,197} %write{196,196}
+temp	int	$tmp141	 %read{202,202} %write{201,201}
+temp	int	$tmp142	 %read{203,203} %write{202,202}
+code Vector
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:3
+#     color Color1 = color(1.0,0.0,0.0),
+	assign		Vector P 	%filename{"D:\\Blender\\OSL\\NGon\\Ngon.osl"} %line{3} %argrw{"wr"}
+code ___main___
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:12
+#     Pl = transform("object",Vector);    // Перекинуть в координаты объекта (на всем протяжении объекта значение меняется от 0 до 1)
+	assign		Pl Vector 	%filename{"D:\\Blender\\OSL\\NGon\\Ngon.osl"} %line{12} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:13
+#     
+	functioncall	$const2 4 	%line{13} %argrw{"r"}
+# C:/Program Files\\blender-2.68a-windows64\\2.68\\scripts\\addons\\cycles\\shader\\stdosl.h:227
+# {
+	transformv	Pl $const3 $const1 Vector 	%filename{"C:/Program Files\\blender-2.68a-windows64\\2.68\\scripts\\addons\\cycles\\shader\\stdosl.h"} %line{227} %argrw{"wrrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:18
+#     
+	aassign		ngon $const5 $const4 	%filename{"D:\\Blender\\OSL\\NGon\\Ngon.osl"} %line{18} %argrw{"wrr"}
+	aassign		ngon $const7 $const6 	%argrw{"wrr"}
+	aassign		ngon $const9 $const8 	%argrw{"wrr"}
+	aassign		ngon $const11 $const10 	%argrw{"wrr"}
+	aassign		ngon $const13 $const12 	%argrw{"wrr"}
+	aassign		ngon $const15 $const14 	%argrw{"wrr"}
+	aassign		ngon $const17 $const16 	%argrw{"wrr"}
+	aassign		ngon $const19 $const18 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:22
+#     for(int p=0; p<arraylength(ngon); p++) {
+	assign		Scale $const20 	%line{22} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:23
+#         if(fmod(abs(Pl[0]),1)<0.5&&fmod(abs(Pl[1]),1)<0.5) ngon1[p] = point(ngon[p][0]+Scale,ngon[p][1]+Scale,0.0);
+	for		$tmp10 15 17 101 103 	%line{23} %argrw{"r"}
+	assign		___297_p $const5 	%argrw{"wr"}
+	arraylength	$tmp9 ngon 	%argrw{"wr"}
+	lt		$tmp10 ___297_p $tmp9 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:24
+#         if(fmod(abs(Pl[0]),1)>=0.5&&fmod(abs(Pl[1]),1)<0.5) ngon1[p] = point(ngon[p][0]-Scale,ngon[p][1]+Scale,0.0);
+	compref		$tmp13 Pl $const5 	%line{24} %argrw{"wrr"}
+	abs		$tmp12 $tmp13 	%argrw{"wr"}
+	fmod		$tmp11 $tmp12 $const21 	%argrw{"wrr"}
+	lt		$tmp14 $tmp11 $const22 	%argrw{"wrr"}
+	neq		$tmp15 $tmp14 $const5 	%argrw{"wrr"}
+	if		$tmp15 29 29 	%argrw{"r"}
+	compref		$tmp18 Pl $const7 	%argrw{"wrr"}
+	abs		$tmp17 $tmp18 	%argrw{"wr"}
+	fmod		$tmp16 $tmp17 $const21 	%argrw{"wrr"}
+	lt		$tmp19 $tmp16 $const22 	%argrw{"wrr"}
+	neq		$tmp20 $tmp19 $const5 	%argrw{"wrr"}
+	assign		$tmp15 $tmp20 	%argrw{"wr"}
+	if		$tmp15 38 38 	%argrw{"r"}
+	aref		$tmp23 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp22 $tmp23 $const5 	%argrw{"wrr"}
+	add		$tmp24 $tmp22 Scale 	%argrw{"wrr"}
+	aref		$tmp26 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp25 $tmp26 $const7 	%argrw{"wrr"}
+	add		$tmp27 $tmp25 Scale 	%argrw{"wrr"}
+	point		$tmp21 $tmp24 $tmp27 $const23 	%argrw{"wrrr"}
+	aassign		ngon1 ___297_p $tmp21 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:25
+#         if(fmod(abs(Pl[0]),1)<0.5&&fmod(abs(Pl[1]),1)>=0.5) ngon1[p] = point(ngon[p][0]+Scale,ngon[p][1]-Scale,0.0);
+	compref		$tmp30 Pl $const5 	%line{25} %argrw{"wrr"}
+	abs		$tmp29 $tmp30 	%argrw{"wr"}
+	fmod		$tmp28 $tmp29 $const21 	%argrw{"wrr"}
+	ge		$tmp31 $tmp28 $const22 	%argrw{"wrr"}
+	neq		$tmp32 $tmp31 $const5 	%argrw{"wrr"}
+	if		$tmp32 50 50 	%argrw{"r"}
+	compref		$tmp35 Pl $const7 	%argrw{"wrr"}
+	abs		$tmp34 $tmp35 	%argrw{"wr"}
+	fmod		$tmp33 $tmp34 $const21 	%argrw{"wrr"}
+	lt		$tmp36 $tmp33 $const22 	%argrw{"wrr"}
+	neq		$tmp37 $tmp36 $const5 	%argrw{"wrr"}
+	assign		$tmp32 $tmp37 	%argrw{"wr"}
+	if		$tmp32 59 59 	%argrw{"r"}
+	aref		$tmp40 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp39 $tmp40 $const5 	%argrw{"wrr"}
+	sub		$tmp41 $tmp39 Scale 	%argrw{"wrr"}
+	aref		$tmp43 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp42 $tmp43 $const7 	%argrw{"wrr"}
+	add		$tmp44 $tmp42 Scale 	%argrw{"wrr"}
+	point		$tmp38 $tmp41 $tmp44 $const23 	%argrw{"wrrr"}
+	aassign		ngon1 ___297_p $tmp38 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:26
+#         if(fmod(abs(Pl[0]),1)>=0.5&&fmod(abs(Pl[1]),1)>=0.5) ngon1[p] = point(ngon[p][0]-Scale,ngon[p][1]-Scale,0.0);
+	compref		$tmp47 Pl $const5 	%line{26} %argrw{"wrr"}
+	abs		$tmp46 $tmp47 	%argrw{"wr"}
+	fmod		$tmp45 $tmp46 $const21 	%argrw{"wrr"}
+	lt		$tmp48 $tmp45 $const22 	%argrw{"wrr"}
+	neq		$tmp49 $tmp48 $const5 	%argrw{"wrr"}
+	if		$tmp49 71 71 	%argrw{"r"}
+	compref		$tmp52 Pl $const7 	%argrw{"wrr"}
+	abs		$tmp51 $tmp52 	%argrw{"wr"}
+	fmod		$tmp50 $tmp51 $const21 	%argrw{"wrr"}
+	ge		$tmp53 $tmp50 $const22 	%argrw{"wrr"}
+	neq		$tmp54 $tmp53 $const5 	%argrw{"wrr"}
+	assign		$tmp49 $tmp54 	%argrw{"wr"}
+	if		$tmp49 80 80 	%argrw{"r"}
+	aref		$tmp57 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp56 $tmp57 $const5 	%argrw{"wrr"}
+	add		$tmp58 $tmp56 Scale 	%argrw{"wrr"}
+	aref		$tmp60 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp59 $tmp60 $const7 	%argrw{"wrr"}
+	sub		$tmp61 $tmp59 Scale 	%argrw{"wrr"}
+	point		$tmp55 $tmp58 $tmp61 $const23 	%argrw{"wrrr"}
+	aassign		ngon1 ___297_p $tmp55 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:27
+#     }    
+	compref		$tmp64 Pl $const5 	%line{27} %argrw{"wrr"}
+	abs		$tmp63 $tmp64 	%argrw{"wr"}
+	fmod		$tmp62 $tmp63 $const21 	%argrw{"wrr"}
+	ge		$tmp65 $tmp62 $const22 	%argrw{"wrr"}
+	neq		$tmp66 $tmp65 $const5 	%argrw{"wrr"}
+	if		$tmp66 92 92 	%argrw{"r"}
+	compref		$tmp69 Pl $const7 	%argrw{"wrr"}
+	abs		$tmp68 $tmp69 	%argrw{"wr"}
+	fmod		$tmp67 $tmp68 $const21 	%argrw{"wrr"}
+	ge		$tmp70 $tmp67 $const22 	%argrw{"wrr"}
+	neq		$tmp71 $tmp70 $const5 	%argrw{"wrr"}
+	assign		$tmp66 $tmp71 	%argrw{"wr"}
+	if		$tmp66 101 101 	%argrw{"r"}
+	aref		$tmp74 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp73 $tmp74 $const5 	%argrw{"wrr"}
+	sub		$tmp75 $tmp73 Scale 	%argrw{"wrr"}
+	aref		$tmp77 ngon ___297_p 	%argrw{"wrr"}
+	compref		$tmp76 $tmp77 $const7 	%argrw{"wrr"}
+	sub		$tmp78 $tmp76 Scale 	%argrw{"wrr"}
+	point		$tmp72 $tmp75 $tmp78 $const23 	%argrw{"wrrr"}
+	aassign		ngon1 ___297_p $tmp72 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:23
+#         if(fmod(abs(Pl[0]),1)<0.5&&fmod(abs(Pl[1]),1)<0.5) ngon1[p] = point(ngon[p][0]+Scale,ngon[p][1]+Scale,0.0);
+	assign		$tmp79 ___297_p 	%line{23} %argrw{"wr"}
+	add		___297_p ___297_p $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:32
+#     int Lighten1 = 0;
+	assign		Lighten $const5 	%line{32} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:33
+#     
+	assign		Lighten1 $const5 	%line{33} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:39
+#         int pn = p+1;
+	for		$tmp81 107 109 158 160 	%line{39} %argrw{"r"}
+	assign		___299_p $const5 	%argrw{"wr"}
+	arraylength	$tmp80 ngon 	%argrw{"wr"}
+	lt		$tmp81 ___299_p $tmp80 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:40
+#         if(pn==arraylength(ngon)) pn=0;
+	add		___300_pn ___299_p $const7 	%line{40} %argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:41
+#         float Tx = fmod(abs(Pl[0]),1);  // берем только дробную часть (по модулю) чтобы считать везде а не только в (0-1)
+	arraylength	$tmp82 ngon 	%line{41} %argrw{"wr"}
+	eq		$tmp83 ___300_pn $tmp82 	%argrw{"wrr"}
+	if		$tmp83 114 114 	%argrw{"r"}
+	assign		___300_pn $const5 	%argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:42
+#         float Ty = fmod(abs(Pl[1]),1);
+	compref		$tmp85 Pl $const5 	%line{42} %argrw{"wrr"}
+	abs		$tmp84 $tmp85 	%argrw{"wr"}
+	fmod		___300_Tx $tmp84 $const21 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:43
+#         
+	compref		$tmp87 Pl $const7 	%line{43} %argrw{"wrr"}
+	abs		$tmp86 $tmp87 	%argrw{"wr"}
+	fmod		___300_Ty $tmp86 $const21 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:46
+#         float Ay = ngon[p][1];
+	aref		$tmp88 ngon ___299_p 	%line{46} %argrw{"wrr"}
+	compref		___300_Ax $tmp88 $const5 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:47
+#         float Bx = ngon[pn][0];
+	aref		$tmp89 ngon ___299_p 	%line{47} %argrw{"wrr"}
+	compref		___300_Ay $tmp89 $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:48
+#         float By = ngon[pn][1];
+	aref		$tmp90 ngon ___300_pn 	%line{48} %argrw{"wrr"}
+	compref		___300_Bx $tmp90 $const5 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:49
+#         float S = ((Ax-Tx)*(By-Ty)-(Ay-Ty)*(Bx-Tx))*0.5;
+	aref		$tmp91 ngon ___300_pn 	%line{49} %argrw{"wrr"}
+	compref		___300_By $tmp91 $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:50
+#         if(S>=0) Lighten = Lighten+1;
+	sub		$tmp92 ___300_Ax ___300_Tx 	%line{50} %argrw{"wrr"}
+	sub		$tmp93 ___300_By ___300_Ty 	%argrw{"wrr"}
+	mul		$tmp94 $tmp92 $tmp93 	%argrw{"wrr"}
+	sub		$tmp95 ___300_Ay ___300_Ty 	%argrw{"wrr"}
+	sub		$tmp96 ___300_Bx ___300_Tx 	%argrw{"wrr"}
+	mul		$tmp97 $tmp95 $tmp96 	%argrw{"wrr"}
+	sub		$tmp98 $tmp94 $tmp97 	%argrw{"wrr"}
+	mul		___300_S $tmp98 $const22 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:51
+#         
+	ge		$tmp99 ___300_S $const5 	%line{51} %argrw{"wrr"}
+	if		$tmp99 139 139 	%argrw{"r"}
+	add		Lighten Lighten $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:54
+#         Ay = ngon1[p][1];
+	aref		$tmp100 ngon1 ___299_p 	%line{54} %argrw{"wrr"}
+	compref		___300_Ax $tmp100 $const5 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:55
+#         Bx = ngon1[pn][0];
+	aref		$tmp101 ngon1 ___299_p 	%line{55} %argrw{"wrr"}
+	compref		___300_Ay $tmp101 $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:56
+#         By = ngon1[pn][1];
+	aref		$tmp102 ngon1 ___300_pn 	%line{56} %argrw{"wrr"}
+	compref		___300_Bx $tmp102 $const5 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:57
+#         S = ((Ax-Tx)*(By-Ty)-(Ay-Ty)*(Bx-Tx))*0.5;
+	aref		$tmp103 ngon1 ___300_pn 	%line{57} %argrw{"wrr"}
+	compref		___300_By $tmp103 $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:58
+#         if(S>=0) Lighten1 = Lighten1+1;
+	sub		$tmp104 ___300_Ax ___300_Tx 	%line{58} %argrw{"wrr"}
+	sub		$tmp105 ___300_By ___300_Ty 	%argrw{"wrr"}
+	mul		$tmp106 $tmp104 $tmp105 	%argrw{"wrr"}
+	sub		$tmp107 ___300_Ay ___300_Ty 	%argrw{"wrr"}
+	sub		$tmp108 ___300_Bx ___300_Tx 	%argrw{"wrr"}
+	mul		$tmp109 $tmp107 $tmp108 	%argrw{"wrr"}
+	sub		$tmp110 $tmp106 $tmp109 	%argrw{"wrr"}
+	mul		___300_S $tmp110 $const22 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:59
+# 
+	ge		$tmp111 ___300_S $const5 	%line{59} %argrw{"wrr"}
+	if		$tmp111 158 158 	%argrw{"r"}
+	add		Lighten1 Lighten1 $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:39
+#         int pn = p+1;
+	assign		$tmp112 ___299_p 	%line{39} %argrw{"wr"}
+	add		___299_p ___299_p $const7 	%argrw{"wrr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:64
+#         // "освещены" большой и маленький многоугольники - основной цвет
+	arraylength	$tmp113 ngon 	%line{64} %argrw{"wr"}
+	eq		$tmp114 Lighten $tmp113 	%argrw{"wrr"}
+	neq		$tmp115 $tmp114 $const5 	%argrw{"wrr"}
+	if		$tmp115 168 168 	%argrw{"r"}
+	arraylength	$tmp116 ngon 	%argrw{"wr"}
+	eq		$tmp117 Lighten1 $tmp116 	%argrw{"wrr"}
+	neq		$tmp118 $tmp117 $const5 	%argrw{"wrr"}
+	assign		$tmp115 $tmp118 	%argrw{"wr"}
+	if		$tmp115 201 208 	%argrw{"r"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:66
+#         if(fmod(ceil(Pl[0]),2)==0&&fmod(ceil(Pl[1]),2)!=0||fmod(ceil(Pl[0]),2)!=0&&fmod(ceil(Pl[1]),2)==0) Color = Color1;
+	assign		Factor $const7 	%line{66} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:67
+#         else Color = Color2;
+	compref		$tmp121 Pl $const5 	%line{67} %argrw{"wrr"}
+	ceil		$tmp120 $tmp121 	%argrw{"wr"}
+	fmod		$tmp119 $tmp120 $const24 	%argrw{"wrr"}
+	eq		$tmp122 $tmp119 $const5 	%argrw{"wrr"}
+	neq		$tmp123 $tmp122 $const5 	%argrw{"wrr"}
+	if		$tmp123 182 182 	%argrw{"r"}
+	compref		$tmp126 Pl $const7 	%argrw{"wrr"}
+	ceil		$tmp125 $tmp126 	%argrw{"wr"}
+	fmod		$tmp124 $tmp125 $const24 	%argrw{"wrr"}
+	neq		$tmp127 $tmp124 $const5 	%argrw{"wrr"}
+	neq		$tmp128 $tmp127 $const5 	%argrw{"wrr"}
+	assign		$tmp123 $tmp128 	%argrw{"wr"}
+	neq		$tmp129 $tmp123 $const5 	%argrw{"wrr"}
+	if		$tmp129 184 198 	%argrw{"r"}
+	compref		$tmp132 Pl $const5 	%argrw{"wrr"}
+	ceil		$tmp131 $tmp132 	%argrw{"wr"}
+	fmod		$tmp130 $tmp131 $const24 	%argrw{"wrr"}
+	neq		$tmp133 $tmp130 $const5 	%argrw{"wrr"}
+	neq		$tmp134 $tmp133 $const5 	%argrw{"wrr"}
+	if		$tmp134 196 196 	%argrw{"r"}
+	compref		$tmp137 Pl $const7 	%argrw{"wrr"}
+	ceil		$tmp136 $tmp137 	%argrw{"wr"}
+	fmod		$tmp135 $tmp136 $const24 	%argrw{"wrr"}
+	eq		$tmp138 $tmp135 $const5 	%argrw{"wrr"}
+	neq		$tmp139 $tmp138 $const5 	%argrw{"wrr"}
+	assign		$tmp134 $tmp139 	%argrw{"wr"}
+	neq		$tmp140 $tmp134 $const5 	%argrw{"wrr"}
+	assign		$tmp129 $tmp140 	%argrw{"wr"}
+	if		$tmp129 200 201 	%argrw{"r"}
+	assign		Color Color1 	%argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:68
+#     }
+	assign		Color Color2 	%line{68} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:71
+#             // Освещен только маленький - цвет рамки
+	arraylength	$tmp141 ngon 	%line{71} %argrw{"wr"}
+	eq		$tmp142 Lighten $tmp141 	%argrw{"wrr"}
+	if		$tmp142 206 208 	%argrw{"r"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:73
+#             Color = BorderColor;
+	assign		Factor $const22 	%line{73} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:74
+#         }
+	assign		Color BorderColor 	%line{74} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:78
+#             Color = Color3;
+	assign		Factor $const5 	%line{78} %argrw{"wr"}
+# D:\\Blender\\OSL\\NGon\\Ngon.osl:79
+#         }
+	assign		Color Color3 	%line{79} %argrw{"wr"}
+	end
