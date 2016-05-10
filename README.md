@@ -13,3 +13,4 @@ korchiy@yandex.ru
 Octagone
 ---
 <a href="http://i.imgur.com/WKdc2VZ.png"><img src="http://i.imgur.com/WKdc2VZt.png"></a>
+<a href="http://.imgur.com/UkfwHrg.png"><img src="http://i.imgur.com/UkfwHrgm.png"></a>
